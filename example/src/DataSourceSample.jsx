@@ -1,6 +1,5 @@
 import React from 'react'
 import Chart from 'bk-react-charts'
-import 'bk-react-charts/dist/index.css'
 
 function DataSourceSample() {
   let data = [
@@ -44,7 +43,6 @@ function DataSourceSample() {
         {
           data: data2,
           name: 'Japan'
-          // marker: { dataLabel: { visible: true } },
         }
       ]}
       xName='month'
