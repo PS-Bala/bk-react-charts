@@ -1,10 +1,8 @@
 import React from 'react'
-
-import { ExampleComponent } from 'bk-react-charts'
-import 'bk-react-charts/dist/index.css'
+import DataSourceSample from './DataSourceSample'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <DataSourceSample />
 }
 
 export default App
