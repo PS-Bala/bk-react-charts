@@ -1,6 +1,6 @@
 # bk-react-charts
 
-> The Chart component is used to visualize data with user interaction and provides customization options to visually configure the data. It can bind data from datasources such as JSON object array, OData web services, or DataManager. All of the chart elements are rendered using Scalable Vector Graphics (SVG).
+> The Chart component is used to visualize data with user interaction and provides customization options to visually configure the data. It can bind data from datasources such as JSON object array and web services. All of the chart elements are rendered using Scalable Vector Graphics (SVG).
 
 [![NPM](https://img.shields.io/npm/v/bk-react-charts.svg)](https://www.npmjs.com/package/bk-react-charts) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
