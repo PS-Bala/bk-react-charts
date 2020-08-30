@@ -1,78 +1,76 @@
-import React from 'react'
-import Axis from './axis/Axis'
-import { getYAxisLength, getMinMaxValues, getXAxisLabels } from './util/util'
-import RenderLineChart from './line-chart/RenderLineChart'
-import Title from './title/Title'
+import React from "react";
+import Axis from "./axis/Axis";
+import { getYAxisLength, getMinMaxValues, getXAxisLabels } from "./util/util";
+import Title from "./title/Title";
+import LineChart from "./line-chart/LineChart";
 
 function Chart({
-  height = '400px',
-  width = '400px',
-  backgroundColor = '#ffffff',
-  outerBorderWidth = '0px',
-  outerBorderColor = '#ffffff',
+  height = "400px",
+  width = "400px",
+  backgroundColor = "#ffffff",
+  outerBorderWidth = "0px",
+  outerBorderColor = "#ffffff",
   dataSource = [],
-  xName = 'xName',
-  yName = 'yName',
+  xName = "xName",
+  yName = "yName",
   title = null,
   primaryXAxis,
   primaryYAxis,
-  tooltip
+  tooltip,
 }) {
   const outerSpace = {
     left: 49,
     right: 20,
     top: title != null ? 40 : 20,
-    bottom: 49
-  }
+    bottom: 49,
+  };
 
-  const widthInNumber = parseInt(width)
-  const heightInNumber = parseInt(height)
+  const widthInNumber = parseInt(width);
+  const heightInNumber = parseInt(height);
 
-  const xAxisLength = getYAxisLength(widthInNumber, outerSpace)
-  const yAxisLength = getYAxisLength(heightInNumber, outerSpace)
-
-  const defaultMarkerSettings = { dataLabel: { visible: false } }
+  const xAxisLength = getYAxisLength(widthInNumber, outerSpace);
+  const yAxisLength = getYAxisLength(heightInNumber, outerSpace);
 
   primaryXAxis = {
     lineStyle: { width: 1 },
-    ...primaryXAxis
-  }
+    ...primaryXAxis,
+  };
   primaryYAxis = {
     lineStyle: { width: 1 },
     interval: 10,
     minimum: null,
     maximum: null,
-    labelFormat: '{value}',
-    ...primaryYAxis
-  }
-  tooltip = { enable: false, ...tooltip }
-  let minYValue, maxYValue
+    labelFormat: "{value}",
+    ...primaryYAxis,
+  };
+  tooltip = { enable: false, ...tooltip };
+  let minYValue, maxYValue;
 
   if (
     dataSource.length === 1 &&
     primaryYAxis.minimum === null &&
     primaryYAxis.maximum === null
   ) {
-    ;[minYValue, maxYValue] = getMinMaxValues(
+    [minYValue, maxYValue] = getMinMaxValues(
       dataSource[0],
       yName,
       primaryYAxis.interval,
       yAxisLength
-    )
+    );
   } else {
-    minYValue = primaryYAxis.minimum
-    maxYValue = primaryYAxis.maximum
+    minYValue = primaryYAxis.minimum;
+    maxYValue = primaryYAxis.maximum;
   }
 
-  const xAxisLabels = getXAxisLabels(dataSource, xName)
+  const xAxisLabels = getXAxisLabels(dataSource, xName);
 
-  const singleRangeInPixel = xAxisLength / (xAxisLabels.length - 1)
-  const pixelForOneYValue = yAxisLength / (maxYValue - minYValue)
+  const singleRangeInPixel = xAxisLength / (xAxisLabels.length - 1);
+  const pixelForOneYValue = yAxisLength / (maxYValue - minYValue);
 
   // ------title related settings------
-  let titleLeftPosition
+  let titleLeftPosition;
   if (title != null) {
-    titleLeftPosition = widthInNumber / 2
+    titleLeftPosition = widthInNumber / 2;
   }
   // -----------------------------------
 
@@ -84,7 +82,7 @@ function Chart({
         style={{
           fill: backgroundColor,
           strokeWidth: outerBorderWidth,
-          stroke: outerBorderColor
+          stroke: outerBorderColor,
         }}
       />
       <Title titleLeftPosition={titleLeftPosition} title={title}></Title>
@@ -101,37 +99,21 @@ function Chart({
         primaryXAxis={primaryXAxis}
         primaryYAxis={primaryYAxis}
       />
-      {dataSource.length > 0 &&
-        dataSource.map((item, index) => {
-          item = {
-            marker: defaultMarkerSettings,
-            ...item
-          }
-          const { data, name, marker } = item
-
-          const lineChartProps = {
-            dataSource: data,
-            name,
-            markerSettings: marker,
-            tooltip,
-            yAxisLength,
-            outerSpace,
-            minYValue,
-            pixelForOneYValue,
-            singleRangeInPixel,
-            xName,
-            yName,
-            primaryYAxis
-          }
-          return (
-            <RenderLineChart
-              key={`line-chart-${index + 1}`}
-              {...lineChartProps}
-            ></RenderLineChart>
-          )
-        })}
+      <LineChart
+        dataSource={dataSource}
+        chartWidth={widthInNumber}
+        chartHeight={heightInNumber}
+        outerSpace={outerSpace}
+        minYValue={minYValue}
+        pixelForOneYValue={pixelForOneYValue}
+        singleRangeInPixel={singleRangeInPixel}
+        xName={xName}
+        yName={yName}
+        primaryYAxis={primaryYAxis}
+        tooltip={tooltip}
+      ></LineChart>
     </svg>
-  )
+  );
 }
 
-export default Chart
+export default Chart;

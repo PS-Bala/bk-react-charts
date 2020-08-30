@@ -130,3 +130,51 @@ export function getXAxisLabels(dataSource, xName) {
   xAxisLabels = [...new Set(xAxisLabels)];
   return xAxisLabels;
 }
+
+export function getRandomColor(index) {
+  const colorList = [
+    "#aa8828",
+    "#114a58",
+    "#00bdae",
+    "#c60fda",
+    "#212d61",
+    "#d3bb0d",
+  ];
+  return colorList[index];
+}
+
+export function getLegendContainerWidth(dataSource) {
+  let totalLegendContainerWidth = 0;
+  for (const item of dataSource) {
+    const { name } = item;
+    const currentLegendWidth = 25 + name.length * 8;
+    totalLegendContainerWidth += currentLegendWidth;
+  }
+  return totalLegendContainerWidth;
+}
+export function getLegendPosition(
+  legendContainerWidth,
+  dataSource,
+  legendName,
+  chartWidth,
+  chartHeight
+) {
+  let legendPosition = { x: 0, y: 0 };
+  const charWidth = 8;
+  const iconWidth = 20;
+  let stopAdd = false;
+  let leftPosition = chartWidth / 2 - legendContainerWidth / 2;
+  for (const item of dataSource) {
+    const { name } = item;
+    if (legendName === name) {
+      stopAdd = true;
+    }
+    if (stopAdd != true) {
+      const currentLegendWidth = iconWidth + name.length * charWidth;
+      leftPosition += currentLegendWidth;
+    }
+  }
+  legendPosition.x = leftPosition;
+  legendPosition.y = chartHeight - 5;
+  return legendPosition;
+}
