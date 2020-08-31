@@ -127,7 +127,7 @@ export function getXAxisLabels(dataSource, xName) {
       xAxisLabels.push(item[xName]);
     }
   }
-  xAxisLabels = [...new Set(xAxisLabels)];
+  xAxisLabels = Array.from(new Set(xAxisLabels));
   return xAxisLabels;
 }
 
