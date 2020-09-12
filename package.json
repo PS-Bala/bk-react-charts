@@ -1,6 +1,6 @@
 {
   "name": "bk-react-charts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The Chart component is used to visualize data with user interaction and provides customization options to visually configure the data. It can bind data from datasources such as JSON object array and web services. All of the chart elements are rendered using Scalable Vector Graphics (SVG).",
   "author": "PS-Bala",
   "license": "MIT",

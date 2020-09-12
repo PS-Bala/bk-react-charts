@@ -148,6 +148,10 @@ export default PieChartSample
 
 ![Pie chart sample](https://i.ibb.co/CncTfnq/PieChart.png)
 
+## Support
+
+For support and queries, you can contact **bk.techee@gmail.com**
+
 ## License
 
 MIT © [PS-Bala](https://github.com/PS-Bala)
