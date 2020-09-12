@@ -51,18 +51,16 @@ function DataSourceSample() {
       dataSource={[
         {
           data: data,
-          name: 'India'
-          // marker: { dataLabel: { visible: true } },
+          name: 'India',
+          marker: { dataLabel: { visible: true } }
         },
         {
           data: data2,
           name: 'U.S'
-          // marker: { dataLabel: { visible: true } },
         },
         {
           data: data3,
           name: 'Japan'
-          // marker: { dataLabel: { visible: true } },
         }
       ]}
       xName='month'

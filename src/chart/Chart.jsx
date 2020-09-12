@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Axis from "./axis/Axis";
-import { getYAxisLength, getMinMaxValues, getXAxisLabels } from "./util/util";
+import {
+  getYAxisLength,
+  getMinMaxValues,
+  getXAxisLabels,
+  ChartType,
+} from "./util/util";
 import Title from "./title/Title";
 import LineChart from "./line-chart/LineChart";
+import PieChart from "./pie-chart/PieChart";
+import Tooltip from "./tooltip/Tooltip";
 
 function Chart({
   height = "400px",
   width = "400px",
   backgroundColor = "#ffffff",
   outerBorderWidth = "0px",
-  outerBorderColor = "#ffffff",
+  outerBorderColor = "lightgray",
+  type = ChartType.Line,
   dataSource = [],
   xName = "xName",
   yName = "yName",
@@ -17,7 +25,12 @@ function Chart({
   primaryXAxis,
   primaryYAxis,
   tooltip,
+  pieChartExplode,
+  pieChartExplodeIndex,
+  pieChartExplodeOffset,
+  pieChartRadius,
 }) {
+  let xAxisLabels, singleRangeInPixel, pixelForOneYValue;
   const outerSpace = {
     left: 49,
     right: 20,
@@ -46,26 +59,30 @@ function Chart({
   tooltip = { enable: false, ...tooltip };
   let minYValue, maxYValue;
 
-  if (
-    dataSource.length === 1 &&
-    primaryYAxis.minimum === null &&
-    primaryYAxis.maximum === null
-  ) {
-    [minYValue, maxYValue] = getMinMaxValues(
-      dataSource[0],
-      yName,
-      primaryYAxis.interval,
-      yAxisLength
-    );
-  } else {
-    minYValue = primaryYAxis.minimum;
-    maxYValue = primaryYAxis.maximum;
+  // -------------Line chart related code-------------------
+  if (type === ChartType.Line) {
+    if (
+      dataSource.length === 1 &&
+      primaryYAxis.minimum === null &&
+      primaryYAxis.maximum === null
+    ) {
+      [minYValue, maxYValue] = getMinMaxValues(
+        dataSource[0],
+        yName,
+        primaryYAxis.interval,
+        yAxisLength
+      );
+    } else {
+      minYValue = primaryYAxis.minimum;
+      maxYValue = primaryYAxis.maximum;
+    }
+
+    xAxisLabels = getXAxisLabels(dataSource, xName);
+
+    singleRangeInPixel = xAxisLength / (xAxisLabels.length - 1);
+    pixelForOneYValue = yAxisLength / (maxYValue - minYValue);
   }
-
-  const xAxisLabels = getXAxisLabels(dataSource, xName);
-
-  const singleRangeInPixel = xAxisLength / (xAxisLabels.length - 1);
-  const pixelForOneYValue = yAxisLength / (maxYValue - minYValue);
+  // -----------------------------------
 
   // ------title related settings------
   let titleLeftPosition;
@@ -74,6 +91,58 @@ function Chart({
   }
   // -----------------------------------
 
+  // ------Tooltip related settings-----------
+  let [tooltipSettings, setTooltipSettings] = useState({
+    show: false,
+    data: { x: null, y: null, name: null },
+    position: { x: null, y: null },
+  });
+
+  const updateTooltip = (xValue, yValue, name, position, eventArgs) => {
+    eventArgs.stopPropagation();
+    let x = xValue;
+    let y = yValue;
+    setTooltipSettings({ show: true, data: { x, y, name }, position });
+  };
+
+  const removeTooltip = () => {
+    setTooltipSettings({ show: false });
+  };
+  // -------------------------------------
+
+  const getLineChart = () => {
+    return (
+      <React.Fragment>
+        <Axis
+          chartWidth={widthInNumber}
+          chartHeight={heightInNumber}
+          outerSpace={outerSpace}
+          dataSourceAvailable={dataSource.length > 0}
+          xAxisLabels={xAxisLabels}
+          valueDifferenceInYAxis={primaryYAxis.interval}
+          minYValue={minYValue}
+          maxYValue={maxYValue}
+          singleRangeInPixel={singleRangeInPixel}
+          primaryXAxis={primaryXAxis}
+          primaryYAxis={primaryYAxis}
+        />
+        <LineChart
+          dataSource={dataSource}
+          chartWidth={widthInNumber}
+          chartHeight={heightInNumber}
+          outerSpace={outerSpace}
+          minYValue={minYValue}
+          pixelForOneYValue={pixelForOneYValue}
+          singleRangeInPixel={singleRangeInPixel}
+          xName={xName}
+          yName={yName}
+          primaryYAxis={primaryYAxis}
+          updateTooltip={updateTooltip}
+          removeTooltip={removeTooltip}
+        ></LineChart>
+      </React.Fragment>
+    );
+  };
   return (
     <svg width={width} height={height}>
       <rect
@@ -86,32 +155,27 @@ function Chart({
         }}
       />
       <Title titleLeftPosition={titleLeftPosition} title={title}></Title>
-      <Axis
-        chartWidth={widthInNumber}
-        chartHeight={heightInNumber}
-        outerSpace={outerSpace}
-        dataSourceAvailable={dataSource.length > 0}
-        xAxisLabels={xAxisLabels}
-        valueDifferenceInYAxis={primaryYAxis.interval}
-        minYValue={minYValue}
-        maxYValue={maxYValue}
-        singleRangeInPixel={singleRangeInPixel}
-        primaryXAxis={primaryXAxis}
-        primaryYAxis={primaryYAxis}
-      />
-      <LineChart
-        dataSource={dataSource}
-        chartWidth={widthInNumber}
-        chartHeight={heightInNumber}
-        outerSpace={outerSpace}
-        minYValue={minYValue}
-        pixelForOneYValue={pixelForOneYValue}
-        singleRangeInPixel={singleRangeInPixel}
-        xName={xName}
-        yName={yName}
-        primaryYAxis={primaryYAxis}
-        tooltip={tooltip}
-      ></LineChart>
+      {type === ChartType.Line && getLineChart()}
+      {type === ChartType.Pie && (
+        <PieChart
+          chartWidth={widthInNumber}
+          chartHeight={heightInNumber}
+          dataSource={dataSource[0].data}
+          xName={xName}
+          yName={yName}
+          name={dataSource[0].name}
+          primaryYAxis={primaryYAxis}
+          updateTooltip={updateTooltip}
+          removeTooltip={removeTooltip}
+          explode={pieChartExplode}
+          explodeOffset={pieChartExplodeOffset}
+          explodeIndex={pieChartExplodeIndex}
+          circleRadius={pieChartRadius}
+        ></PieChart>
+      )}
+      {tooltip.enable && tooltipSettings.show && (
+        <Tooltip {...tooltipSettings}></Tooltip>
+      )}
     </svg>
   );
 }

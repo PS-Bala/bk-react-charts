@@ -10,7 +10,9 @@
 npm install --save bk-react-charts
 ```
 
-## Usage
+## Line Chart
+
+### Source
 
 ```jsx
 import React from 'react'
@@ -66,18 +68,16 @@ function DataSourceSample() {
       dataSource={[
         {
           data: data,
-          name: 'India'
-          // marker: { dataLabel: { visible: true } },
+          name: 'India',
+          marker: { dataLabel: { visible: true } }
         },
         {
           data: data2,
           name: 'U.S'
-          // marker: { dataLabel: { visible: true } },
         },
         {
           data: data3,
           name: 'Japan'
-          // marker: { dataLabel: { visible: true } },
         }
       ]}
       xName='month'
@@ -97,6 +97,56 @@ function DataSourceSample() {
 
 export default DataSourceSample
 ```
+
+### Demo for Line Chart
+
+![Line chart sample](https://github.com/PS-Bala/bk-react-charts/readme-assets/LineChart.png)
+
+## Pie Chart
+
+```jsx
+import React from 'react'
+import Chart from 'bk-react-charts'
+
+function PieChartSample() {
+  let expenseDetails = [
+    { item: 'savings', spending: '40%' },
+    { item: 'food', spending: '20%' },
+    { item: 'homeRent', spending: '15%' },
+    { item: 'dress', spending: '5%' },
+    { item: 'travel', spending: '10%' },
+    { item: 'entertainment', spending: '10%' }
+  ]
+  return (
+    <Chart
+      height='400px'
+      width='400px'
+      outerBorderWidth='1px'
+      dataSource={[
+        {
+          data: expenseDetails,
+          name: 'Expense'
+        }
+      ]}
+      xName='item'
+      yName='spending'
+      pieChartExplode={true}
+      pieChartExplodeOffset='10%'
+      pieChartExplodeIndex={1}
+      pieChartRadius={150}
+      title='Expense details'
+      tooltip={{ enable: true }}
+      type='PieChart'
+    />
+  )
+}
+
+export default PieChartSample
+```
+
+### Demo for Pie Chart
+
+![Pie chart sample](https://github.com/PS-Bala/bk-react-charts/readme-assets/PieChart.png)
 
 ## License
 

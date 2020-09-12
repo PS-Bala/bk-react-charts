@@ -134,11 +134,17 @@ export function getXAxisLabels(dataSource, xName) {
 export function getRandomColor(index) {
   const colorList = [
     "#aa8828",
-    "#114a58",
+    "#F9A602",
     "#00bdae",
-    "#c60fda",
+    "#404041",
+    "#357cd2",
+    "#e56590",
+    "#f8b883",
+    "#7c4700",
+    "#FFF200",
     "#212d61",
-    "#d3bb0d",
+    "#FF2400",
+    "#3BB143",
   ];
   return colorList[index];
 }
@@ -178,3 +184,46 @@ export function getLegendPosition(
   legendPosition.y = chartHeight - 5;
   return legendPosition;
 }
+
+export function getContrastColor(hexColor) {
+  // If a leading # is provided, remove it
+  if (hexColor.slice(0, 1) === "#") {
+    hexColor = hexColor.slice(1);
+  }
+
+  // If a three-character hexcode, make six-character
+  if (hexColor.length === 3) {
+    hexColor = hexColor
+      .split("")
+      .map(function (hex) {
+        return hex + hex;
+      })
+      .join("");
+  }
+
+  // Convert to RGB value
+  var r = parseInt(hexColor.substr(0, 2), 16);
+  var g = parseInt(hexColor.substr(2, 2), 16);
+  var b = parseInt(hexColor.substr(4, 2), 16);
+
+  // Get YIQ ratio
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+
+  // Check contrast
+  return yiq >= 128 ? "black" : "white";
+}
+
+export function getTotalValue(dataSource, yName) {
+  return dataSource.reduce((total, item) => {
+    debugger;
+    return total + parseFloat(item[yName]);
+  }, 0);
+}
+
+export const ChartType = {
+  Line: "LineChart",
+  Pie: "PieChart",
+  Bar: "BarChart",
+};
+
+export const RadianOfCircle = 6.28;

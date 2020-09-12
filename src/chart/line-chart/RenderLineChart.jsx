@@ -60,7 +60,13 @@ function RenderLineChart({
               data-yvalue={`${prefix}${dataItem[yName]}${suffix}`}
               data-xvalue={dataItem[xName]}
               data-name={name}
-              onMouseMove={updateTooltip}
+              onMouseMove={(e) => {
+                let { xvalue: x, yvalue: y, name } = e.target.dataset;
+                let position = { x: null, y: null };
+                position.x = e.target.cx.baseVal.value;
+                position.y = e.target.cy.baseVal.value;
+                updateTooltip(x, y, name, position, e);
+              }}
               onMouseLeave={removeTooltip}
             ></ellipse>
           );
