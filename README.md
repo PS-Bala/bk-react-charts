@@ -100,7 +100,7 @@ export default DataSourceSample
 
 ### Demo for Line Chart
 
-![Line chart sample](https://github.com/PS-Bala/bk-react-charts/readme-assets/LineChart.png)
+![Line chart sample](https://raw.githubusercontent.com/PS-Bala/bk-react-charts/master/readme-assets/LineChart.png?token=AEL6G2HCVYA2MIPOYSVKDD27LSEOM)
 
 ## Pie Chart
 
@@ -146,7 +146,7 @@ export default PieChartSample
 
 ### Demo for Pie Chart
 
-![Pie chart sample](https://github.com/PS-Bala/bk-react-charts/readme-assets/PieChart.png)
+![Pie chart sample](https://raw.githubusercontent.com/PS-Bala/bk-react-charts/master/readme-assets/PieChart.png?token=AEL6G2FKWQN47FD6WIL3KZS7LSEUO)
 
 ## License
 
