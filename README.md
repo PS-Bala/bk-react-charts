@@ -10,7 +10,7 @@
 npm install --save bk-react-charts
 ```
 
-## Line Chart
+## Line-Chart
 
 ### Source
 
@@ -98,11 +98,11 @@ function DataSourceSample() {
 export default DataSourceSample
 ```
 
-### Demo for Line Chart
+### Demo for Line-Chart
 
-![Line chart sample](https://raw.githubusercontent.com/PS-Bala/bk-react-charts/master/readme-assets/LineChart.png?token=AEL6G2HCVYA2MIPOYSVKDD27LSEOM)
+![Line chart sample](https://i.ibb.co/vVMGPzc/Line-Chart.png)
 
-## Pie Chart
+## Pie-Chart
 
 ```jsx
 import React from 'react'
@@ -144,9 +144,9 @@ function PieChartSample() {
 export default PieChartSample
 ```
 
-### Demo for Pie Chart
+### Demo for Pie-Chart
 
-![Pie chart sample](https://raw.githubusercontent.com/PS-Bala/bk-react-charts/master/readme-assets/PieChart.png?token=AEL6G2FKWQN47FD6WIL3KZS7LSEUO)
+![Pie chart sample](https://i.ibb.co/CncTfnq/PieChart.png)
 
 ## License
 
