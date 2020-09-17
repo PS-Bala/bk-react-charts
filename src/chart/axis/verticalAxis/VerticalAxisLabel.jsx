@@ -6,10 +6,13 @@ function VerticalAxisLabel({
   labelPosition,
   labelFormat,
 }) {
+  if (labelFormat === null) {
+    return null;
+  }
   const centerAlignAdjustment = 3;
   const [prefix, suffix] = labelFormat.split("{value}");
   return (
-    <g id="containerAxisLabels1">
+    <g id="verticalAxisLabels">
       {verticalLinesPoints.map((point, index) => (
         <text
           key={index}

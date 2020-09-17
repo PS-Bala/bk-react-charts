@@ -3,6 +3,7 @@ import HorizontalAxisLabel from "./HorizontalAxisLabel";
 import {
   calculateDefaultPoints,
   calculateXAxisPointsFromDataSource,
+  ChartType,
   getXAxisLength,
 } from "./../../util/util";
 
@@ -13,6 +14,7 @@ function HorizontalAxis({
   xAxisLabels,
   singleRangeInPixel,
   primaryYAxis,
+  chartType,
 }) {
   const heightStartPoint = chartHeight - outerSpace.bottom;
   const axisWidth = getXAxisLength(chartWidth, outerSpace);
@@ -22,12 +24,14 @@ function HorizontalAxis({
   } ${heightStartPoint}`;
 
   let [linePoints, labels] = [null, null];
+  let barChartHorizontalLabelPositions = null;
 
   if (xAxisLabels.length > 0) {
     [linePoints, labels] = calculateXAxisPointsFromDataSource(
       xAxisLabels,
       outerSpace,
-      singleRangeInPixel
+      singleRangeInPixel,
+      chartType
     );
   } else {
     const rangeCount = 11;
@@ -38,10 +42,16 @@ function HorizontalAxis({
     );
   }
 
+  if (chartType === ChartType.Bar) {
+    barChartHorizontalLabelPositions = linePoints.map(
+      (point) => point + singleRangeInPixel / 2
+    );
+  }
+
   return (
     <g id="containerHorizontalAxis">
       <path
-        id="containerAxisLine_0"
+        id="horizontalAxisLine_0"
         d={path}
         strokeDasharray=""
         strokeWidth="1"
@@ -53,7 +63,10 @@ function HorizontalAxis({
           heightStartPoint + 5
         }`;
         return (
-          <g id={`horizontalAxis-${index}`} key={`horizontalAxis-${index}`}>
+          <g
+            id={`horizontalAxisSplit-${index}`}
+            key={`horizontalAxis-${index}`}
+          >
             <path
               key={`majorTickLine-${index}`}
               id={`container_MajorTickLine_0_${index}`}
@@ -78,7 +91,11 @@ function HorizontalAxis({
         );
       })}
       <HorizontalAxisLabel
-        horizontalLinesPoints={linePoints}
+        horizontalLinesPoints={
+          barChartHorizontalLabelPositions === null
+            ? linePoints
+            : barChartHorizontalLabelPositions
+        }
         labels={labels}
         labelPosition={
           chartHeight - outerSpace.bottom + spaceBetweenLabelAndAxis

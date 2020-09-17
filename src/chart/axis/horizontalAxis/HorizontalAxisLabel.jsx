@@ -4,7 +4,7 @@ function HorizontalAxisLabel({ horizontalLinesPoints, labels, labelPosition }) {
   const centerAlignAdjustment = 3;
 
   return (
-    <g id="containerAxisLabels0">
+    <g id="horizontalAxisLabels">
       {horizontalLinesPoints.map((point, index) => (
         <text
           key={index}

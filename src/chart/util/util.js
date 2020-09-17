@@ -26,7 +26,8 @@ export function calculateDefaultPoints(
 export function calculateXAxisPointsFromDataSource(
   xAxisLabels,
   outerSpace,
-  singleRangeInPixel
+  singleRangeInPixel,
+  chartType
 ) {
   let linesPoints = [];
   let labels = [];
@@ -38,6 +39,10 @@ export function calculateXAxisPointsFromDataSource(
         ? outerSpace.left
         : linesPoints[linesPoints.length - 1] + singleRangeInPixel
     );
+  }
+
+  if (chartType === ChartType.Bar) {
+    linesPoints.push(linesPoints[linesPoints.length - 1] + singleRangeInPixel);
   }
 
   return [linesPoints, labels];
@@ -88,8 +93,9 @@ export function getMinMaxValues(
   valueDifferenceInAxis,
   yAxisLength
 ) {
+  let data = dataSource[0].data;
   let yValues = [];
-  for (const item of dataSource) {
+  for (const item of data) {
     yValues.push(item[yName]);
   }
   let minValue = Math.min(...yValues) - valueDifferenceInAxis;
@@ -175,7 +181,7 @@ export function getLegendPosition(
     if (legendName === name) {
       stopAdd = true;
     }
-    if (stopAdd != true) {
+    if (stopAdd !== true) {
       const currentLegendWidth = iconWidth + name.length * charWidth;
       leftPosition += currentLegendWidth;
     }
@@ -215,7 +221,6 @@ export function getContrastColor(hexColor) {
 
 export function getTotalValue(dataSource, yName) {
   return dataSource.reduce((total, item) => {
-    debugger;
     return total + parseFloat(item[yName]);
   }, 0);
 }

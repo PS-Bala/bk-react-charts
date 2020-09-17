@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Tooltip.module.css";
 
 function Tooltip({ data, position }) {
   const pixelForSingleLength = 8;
@@ -14,6 +15,7 @@ function Tooltip({ data, position }) {
   } 59 L ${tooltipWidth / 2} 70 L ${tooltipWidth / 2 - 6} 59 L 0.25 59 z`;
   return (
     <g
+      className={styles.tooltip}
       id="charts_tooltip_group"
       opacity="1"
       transform={`translate(${position.x - tooltipWidth / 2},${

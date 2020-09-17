@@ -1,4 +1,5 @@
 import React from "react";
+import { ChartType } from "../util/util";
 import HorizontalAxis from "./horizontalAxis/HorizontalAxis";
 import VerticalAxis from "./verticalAxis/VerticalAxis";
 
@@ -14,6 +15,7 @@ function Axis({
   singleRangeInPixel,
   primaryXAxis,
   primaryYAxis,
+  chartType = ChartType.Line,
 }) {
   return (
     <g id="containerAxis">
@@ -24,6 +26,7 @@ function Axis({
         xAxisLabels={xAxisLabels}
         singleRangeInPixel={singleRangeInPixel}
         primaryYAxis={primaryYAxis}
+        chartType={chartType}
       ></HorizontalAxis>
       <VerticalAxis
         chartWidth={chartWidth}
