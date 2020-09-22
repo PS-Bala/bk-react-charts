@@ -12,6 +12,58 @@ npm install --save bk-react-charts
 
 ## Line-Chart
 
+Following example shows the sales report with default line series in the chart.
+
+### Source
+
+```jsx
+import React from 'react'
+import Chart from 'bk-react-charts'
+
+function DataSourceSample() {
+  let data = [
+    { month: 'Jan', sales: 35 },
+    { month: 'Feb', sales: 37 },
+    { month: 'Mar', sales: 39 },
+    { month: 'Apr', sales: 38 },
+    { month: 'May', sales: 37 },
+    { month: 'Jun', sales: 41 },
+    { month: 'Jul', sales: 40 },
+    { month: 'Aug', sales: 43 },
+    { month: 'Sep', sales: 42 },
+    { month: 'Oct', sales: 44 },
+    { month: 'Nov', sales: 45 },
+    { month: 'Dec', sales: 46 }
+  ]
+  return (
+    <Chart
+      height='400px'
+      width='700px'
+      dataSource={[
+        {
+          data: data
+        }
+      ]}
+      xName='month'
+      yName='sales'
+    />
+  )
+}
+
+export default DataSourceSample
+```
+
+### Demo
+
+![Line chart sample](https://i.ibb.co/jDrkFVw/basic-line-chart.png)
+
+### Customized Line chart with multiple series
+
+In following example, we have added multiple series of sales data using `dataSource` property. Also you can customize axis, title and tooltips.
+
+1. Customize yAxis - You can customize the yAxis's interval, minimum, maximum, lineStyle and labelFormat using `primaryYAxis`.
+2. Tooltip - You can enable or disable the tooltip using `tooltip` property.
+
 ### Source
 
 ```jsx
@@ -100,9 +152,20 @@ export default DataSourceSample
 
 ### Demo for Line-Chart
 
-![Line chart sample](https://i.ibb.co/vVMGPzc/Line-Chart.png)
+![Customized Line chart with multiple series sample](https://i.ibb.co/vVMGPzc/Line-Chart.png)
 
 ## Pie-Chart
+
+This sample demonstrates pie chart for monthly expense report.
+
+### Customization options
+
+You can explode the particular part of pie-chart using following properties.
+
+1. pieChartRadius - Helps you customize the pie-chart radius
+2. pieChartExplode - Enables or disables the explosion feature of the pie-chart
+3. pieChartExplodeIndex - Specifies the explosion index of the pie-chart item
+4. pieChartExplodeOffset - Specifies the exploding offset of the pie-chart item
 
 ```jsx
 import React from 'react'
@@ -149,6 +212,8 @@ export default PieChartSample
 ![Pie chart sample](https://i.ibb.co/CncTfnq/PieChart.png)
 
 ## Bar-Chart
+
+This sample shows the Olympic medal count with default column series in the chart.
 
 ```jsx
 import React from 'react'

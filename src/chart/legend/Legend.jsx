@@ -1,6 +1,9 @@
 import React from "react";
 
 function Legend({ id, name, position, color }) {
+  if (name === undefined) {
+    return null;
+  }
   const iconWidth = 10;
   const gapBetweenIconAndText = 4;
   const iconYPosition = position.y - 4;

@@ -159,7 +159,7 @@ export function getLegendContainerWidth(dataSource) {
   let totalLegendContainerWidth = 0;
   for (const item of dataSource) {
     const { name } = item;
-    const currentLegendWidth = 25 + name.length * 8;
+    const currentLegendWidth = 25 + (name !== undefined ? name.length : 0) * 8
     totalLegendContainerWidth += currentLegendWidth;
   }
   return totalLegendContainerWidth;
@@ -182,7 +182,7 @@ export function getLegendPosition(
       stopAdd = true;
     }
     if (stopAdd !== true) {
-      const currentLegendWidth = iconWidth + name.length * charWidth;
+      const currentLegendWidth = iconWidth + (name !== undefined ? name.length : 0) * charWidth;
       leftPosition += currentLegendWidth;
     }
   }
