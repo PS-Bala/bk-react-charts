@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from 'bk-react-charts'
+import 'bk-react-charts/dist/index.css'
 
 function DataSourceSample() {
   let data = [

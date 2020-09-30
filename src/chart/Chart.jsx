@@ -94,7 +94,7 @@ function Chart({
   // -----------------------------------
 
   // ------Tooltip related settings-----------
-  let [tooltipSettings, setTooltipSettings] = useState({
+  const [tooltipSettings, setTooltipSettings] = useState({
     show: false,
     data: { x: null, y: null, name: null },
     position: { x: null, y: null }
@@ -102,8 +102,8 @@ function Chart({
 
   const updateTooltip = (xValue, yValue, name, position, eventArgs) => {
     eventArgs.stopPropagation()
-    let x = xValue
-    let y = yValue
+    const x = xValue
+    const y = yValue
     setTooltipSettings({ show: true, data: { x, y, name }, position })
   }
 
@@ -141,7 +141,7 @@ function Chart({
           primaryYAxis={primaryYAxis}
           updateTooltip={updateTooltip}
           removeTooltip={removeTooltip}
-        ></LineChart>
+        />
       </React.Fragment>
     )
   }
@@ -175,8 +175,29 @@ function Chart({
           removeTooltip={removeTooltip}
           pixelForOneYValue={pixelForOneYValue}
           singleRangeInPixel={singleRangeInPixel}
-        ></BarChart>
+        />
       </React.Fragment>
+    )
+  }
+
+  const getPieChart = () => {
+    return (
+      <PieChart
+        chartWidth={widthInNumber}
+        chartHeight={heightInNumber}
+        outerSpace={outerSpace}
+        dataSource={dataSource[0].data}
+        xName={xName}
+        yName={yName}
+        name={dataSource[0].name}
+        primaryYAxis={primaryYAxis}
+        updateTooltip={updateTooltip}
+        removeTooltip={removeTooltip}
+        explode={pieChartExplode}
+        explodeOffset={pieChartExplodeOffset}
+        explodeIndex={pieChartExplodeIndex}
+        circleRadius={pieChartRadius}
+      />
     )
   }
 
@@ -191,29 +212,12 @@ function Chart({
           stroke: outerBorderColor
         }}
       />
-      <Title titleLeftPosition={titleLeftPosition} title={title}></Title>
+      <Title titleLeftPosition={titleLeftPosition} title={title} />
       {type === ChartType.Line && getLineChart()}
-      {type === ChartType.Pie && (
-        <PieChart
-          chartWidth={widthInNumber}
-          chartHeight={heightInNumber}
-          outerSpace={outerSpace}
-          dataSource={dataSource[0].data}
-          xName={xName}
-          yName={yName}
-          name={dataSource[0].name}
-          primaryYAxis={primaryYAxis}
-          updateTooltip={updateTooltip}
-          removeTooltip={removeTooltip}
-          explode={pieChartExplode}
-          explodeOffset={pieChartExplodeOffset}
-          explodeIndex={pieChartExplodeIndex}
-          circleRadius={pieChartRadius}
-        ></PieChart>
-      )}
+      {type === ChartType.Pie && getPieChart()}
       {type === ChartType.Bar && getBarChart()}
       {tooltip.enable && tooltipSettings.show && (
-        <Tooltip {...tooltipSettings}></Tooltip>
+        <Tooltip {...tooltipSettings} />
       )}
     </svg>
   )
