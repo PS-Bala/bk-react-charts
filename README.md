@@ -19,6 +19,7 @@ Following example shows the sales report with default line series in the chart.
 ```jsx
 import React from 'react'
 import Chart from 'bk-react-charts'
+import 'bk-react-charts/dist/index.css'
 
 function DataSourceSample() {
   let data = [
@@ -69,6 +70,7 @@ In following example, we have added multiple series of sales data using `dataSou
 ```jsx
 import React from 'react'
 import Chart from 'bk-react-charts'
+import 'bk-react-charts/dist/index.css'
 
 function DataSourceSample() {
   let data = [
@@ -170,6 +172,7 @@ You can explode the particular part of pie-chart using following properties.
 ```jsx
 import React from 'react'
 import Chart from 'bk-react-charts'
+import 'bk-react-charts/dist/index.css'
 
 function PieChartSample() {
   let expenseDetails = [
@@ -218,6 +221,7 @@ This sample shows the Olympic medal count with default column series in the char
 ```jsx
 import React from 'react'
 import Chart from 'bk-react-charts'
+import 'bk-react-charts/dist/index.css'
 
 function BarChartSample() {
   let goldMedals = [
